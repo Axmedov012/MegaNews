@@ -29,7 +29,7 @@ class PostPhotoController extends Controller
         return  response('error', Response::HTTP_BAD_REQUEST);
     }
 
-    public function destroy(Post $post, Photos $photo)
+    public function destroy( Photos $photo)
     {
          Storage::delete($photo->path);
          $photo->delete();
