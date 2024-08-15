@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::after(function ($user, $ability) {
-            if ($user->hasRole('super-admin')) {
-                return true;
-            }
-        });
+
     }
 }
