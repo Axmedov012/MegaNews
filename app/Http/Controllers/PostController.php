@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     use PostTrait;
-    public function __construct(protected PostRepository $postRepository){}
+    public function __construct(protected PostRepository $postRepository)
+    {
+
+    }
     public function index()
     {
        $posts = $this->postRepository->getAll();
@@ -20,8 +23,8 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-      $posts =  $request->validated();
-       $post = $this->postRepository->create([
+        $posts =  $request->validated();
+        $post = $this->postRepository->create([
             'user_id'=>auth()->id(),
             'category_id'=>$posts['category_id'],
             'title'=> $posts['title'],

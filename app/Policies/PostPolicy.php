@@ -11,9 +11,9 @@ class PostPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user , Post $post): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post): bool
     {
-        //
+        return  $user->id == $post->id;
     }
 
     /**
@@ -29,15 +29,13 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        //
-    }
+      return $user->hasRole('editor') || $user->hasPermissionTo('post:create');
 
-    /**
-     * Determine whether the user can update the model.
-     */
+
+    }
     public function update(User $user, Post $post): bool
     {
-        //
+        return $post->id == $user->id;
     }
 
     /**
@@ -45,7 +43,11 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        //
+        if ($user->hasRole('editor') ){
+            return  $post->user_id == $user->id;
+        }else{
+           return  $user->hasPermissionTo('post:delete');
+        }
     }
 
     /**
@@ -53,7 +55,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post): bool
     {
-        //
+        return  true;
     }
 
     /**
@@ -61,6 +63,6 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        //
+        return false;
     }
 }

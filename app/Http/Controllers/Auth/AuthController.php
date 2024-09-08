@@ -14,17 +14,18 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $request->validated();
-        $user = User::where('user_name',$request->user_name)->first();
+        $user = User::where('user_name', $request->user_name)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response(['password invalid']);
+            return response(['user name or password  invalid']);
         }
-        return $user->createToken($user->first_name)->plainTextToken;
+        return $user->createToken($user)->plainTextToken;
     }
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
         $data['password'] = Hash::make($request->password);
         $user = User::create($data);
+        $user->assignRole('user');
 
         if ($request->hasFile('photos')) {
                  $photoName = $request->file('photos')->getClientOriginalName();

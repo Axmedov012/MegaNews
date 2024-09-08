@@ -4,8 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\Hash;
+
 
 class UserSeeder extends Seeder
 {
@@ -18,17 +17,36 @@ class UserSeeder extends Seeder
             'first_name' => 'admin',
             'last_name' => 'administrator',
             'user_name' => ' admin',
-            'email' => 'super-admin@gmail.com',
-            'password' => bcrypt('admin'),
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password'),
         ]);
         $superAdmin->assignRole('admin');
+
+        $editor = User::create([
+            'first_name' => 'editor',
+            'last_name' => 'editor',
+            'user_name' => 'editor',
+            'email' => 'editor@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+        $editor->assignRole('editor');
+
+        $support = User::create([
+            'first_name' => 'support',
+            'last_name' => 'support',
+            'user_name' => 'support',
+            'email' => 'support@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+        $support->assignRole('support-manager');
+
 
         $user = User::create([
             'first_name' => 'user',
             'last_name' => 'user',
-            'user_name' => 'super user',
+            'user_name' => 'user',
             'email' => 'user@gmail.com',
-            'password' => bcrypt('user1234'),
+            'password' => bcrypt('password'),
         ]);
         $user->assignRole('user');
     }
